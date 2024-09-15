@@ -1,0 +1,22 @@
+<script>
+console.log("[ hot reload ]");
+{
+  const ws = new WebSocket(`ws://${location.host}/ws`);
+  
+  ws.addEventListener('message', (msg) => {
+    switch (msg.data) {
+    
+    case "reload" :
+      location.reload();
+      break;
+
+    case "refresh-css":
+      const query = "?refresh=" + Date.now();
+      document.querySelectorAll(`link[rel="stylesheet"`).forEach(link => {
+        link.href = link.href.split("?")[0] + query;
+      });
+      break;
+    }
+  });
+}
+</script>
